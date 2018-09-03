@@ -167,9 +167,6 @@ Result PresentScheduler::ProcessPresent(
     IQueue*                     pQueue,
     bool                        isInline)
 {
-    // The Linux present scheduler doesn't support inline presents because it doesn't use queues to execute presents.
-    PAL_ASSERT(isInline == false);
-
     SwapChain*const     pSwapChain    = static_cast<SwapChain*>(presentInfo.pSwapChain);
     const SwapChainMode swapChainMode = pSwapChain->CreateInfo().swapChainMode;
 
@@ -286,5 +283,22 @@ Result PresentScheduler::SignalOnAcquire(
 
     return result;
 }
+
+// =====================================================================================================================
+bool PresentScheduler::CanInlinePresent(
+    const PresentSwapChainInfo& presentInfo,
+    const IQueue&               queue
+    ) const
+{
+    bool canInline = false;
+
+    if (m_pWindowSystem->PlatformType() == Pal::Wayland)
+    {
+        canInline = true;
+    }
+
+    return canInline;
+}
+
 } // Linux
 } // Pal

@@ -63,6 +63,7 @@ private:
 
     virtual Result ProcessPresent(const PresentSwapChainInfo& presentInfo, IQueue* pQueue, bool isInline) override;
     virtual Result FailedToQueuePresentJob(const PresentSwapChainInfo& presentInfo, IQueue* pQueue) override;
+    virtual bool CanInlinePresent(const PresentSwapChainInfo& presentInfo, const IQueue& queue) const override;
 
     WindowSystem*const m_pWindowSystem; // A cached pointer to our parent swap chain's WindowSystem.
 
